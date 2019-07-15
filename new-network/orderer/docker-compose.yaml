@@ -4,10 +4,6 @@
 #
 
 version: '2'
-
-volumes:
-  orderer.hyperfabrics.com:
-
 services:
   orderer-base:
     image: hyperledger/fabric-orderer:$IMAGE_TAG
@@ -16,15 +12,15 @@ services:
       - ORDERER_GENERAL_LISTENADDRESS=0.0.0.0
       - ORDERER_GENERAL_GENESISMETHOD=file
       - ORDERER_GENERAL_GENESISFILE=/var/hyperledger/orderer/orderer.genesis.block
-      - ORDERER_GENERAL_LOCALMSPID=orderer
+      - ORDERER_GENERAL_LOCALMSPID=OrdererMSP
       - ORDERER_GENERAL_LOCALMSPDIR=/var/hyperledger/orderer/msp
       - ORDERER_GENERAL_TLS_ENABLED=false
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric
     command: orderer 2> orderer.log &
     volumes:
     - ./channel-artifacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
-    - msp:/var/hyperledger/orderer/msp
-    - orderer:/var/hyperledger/production/orderer
+    - ./msps/orderer/msp:/var/hyperledger/orderer/msp
+    -  orderer:/var/hyperledger/production/orderer
     ports:
       - 7050:7050
 
@@ -33,8 +29,6 @@ services:
     container_name: orderer.hyperfabrics.com
     extends:
       service: orderer-base
-    enviorment:
-       - ORDERER_GENERAL_LOCALMSPID=orderer
     volumes:
        -./commercialpaper-genesis.block:/var/hyperledger/orderer/orderer.genesis.block
 
