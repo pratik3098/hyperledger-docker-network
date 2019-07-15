@@ -1,0 +1,50 @@
+version: '2'
+
+services:
+  orderer:
+    container_name: orderer-orderer
+    image: hyperledger/fabric-orderer
+    environment:
+      - FABRIC_LOGGING_SPEC=info
+      - ORDERER_GENERAL_LISTENADDRESS=orderer
+      - ORDERER_GENERAL_GENESISMETHOD=file
+      - ORDERER_GENERAL_GENESISFILE=orderer.block
+      - ORDERER_GENERAL_LOCALMSPID=OrdererMSP
+      - ORDERER_GENERAL_LOCALMSPDIR=/etc/hyperledger/msp
+      - GRPC_TRACE=all=true,
+      - GRPC_VERBOSITY=debug
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric
+    command: orderer 2> ./orderer-orderer.log &
+    volumes:
+      - ./msp:/etc/hyperledger/msp
+      - ./orderer.block:/etc/hyperledger/fabric/orderer.block
+    ports:
+      - 7050:7050
+
+  zookeeper.hyperfabrics.com:
+    container_name: zookeeper.hyperfabrics.com
+    image: hyperledger/fabric-zookeeper:$IMAGE_TAG
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 32181
+      ZOOKEEPER_TICK_TIME: 2000
+    networks:
+    - hyperfabrics_network
+
+  kafka.hyperfabrics.com:
+    container_name: kafka.hyperfabrics.com
+    image: hyperledger/fabric-kafka:$IMAGE_TAG
+    depends_on:
+    - orderer
+    - zookeeper.hyperfabrics.com
+    environment:
+      - KAFKA_BROKER_ID=1
+      - KAFKA_ZOOKEEPER_CONNECT=0.0.0.0:2181
+      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://kafka.hyperfabrics.com:9092
+      - KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR=1
+      - KAFKA_MESSAGE_MAX_BYTES=1048576 # 1 * 1024 * 1024 B
+      - KAFKA_REPLICA_FETCH_MAX_BYTES=1048576 # 1 * 1024 * 1024 B
+      - KAFKA_UNCLEAN_LEADER_ELECTION_ENABLE=false
+      - KAFKA_LOG_RETENTION_MS=-1
+      - KAFKA_MIN_INSYNC_REPLICAS=1
+      - KAFKA_DEFAULT_REPLICATION_FACTOR=1
+     networks:

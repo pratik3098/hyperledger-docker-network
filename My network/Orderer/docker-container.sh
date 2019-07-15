@@ -1,0 +1,3 @@
+./gen-channel-artefacts.sh
+
+

@@ -1,0 +1,9 @@
+----- Orderer Setup -----
+1. Change the peer and orderer Ip address in the configtx.yaml file
+2. Change the MSP paths for orgs
+Note: Only configuured for the solo orderer
+
+
+----- Fabric-CA setup ----
+1. Change the server name
+2. Change the server password in fabric-ca-server-config.yaml
