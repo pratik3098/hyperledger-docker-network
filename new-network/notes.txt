@@ -1,0 +1,10 @@
+1. Change the peer chaincode working directory
+
+
+
+1. Change the orderer and peer addressses in configtx.yaml
+2. Change the orderer and peer addressses in docker-compose.yaml
+
+
+
+Execute create-channel command in Papernet-admin

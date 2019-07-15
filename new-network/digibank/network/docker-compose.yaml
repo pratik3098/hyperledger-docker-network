@@ -4,7 +4,7 @@ services:
   peer:
     image: hyperledger/fabric-peer:$VERSION
     environment:
-      - CORE_PEER_LOCALMSPID=MagnetocorpMSP
+      - CORE_PEER_LOCALMSPID=DigibankMSP
       - CORE_PEER_ADDRESS=peer:7051
       - CORE_PEER_CHAINCODE_LISTENADDRESS=chaincode:7052
       - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb:5984
@@ -37,7 +37,7 @@ services:
       - FABRIC_LOGGING_SPEC=DEBUG
       - CORE_PEER_ID=peer
       - CORE_PEER_ADDRESS=peer:7051
-      - CORE_PEER_LOCALMSPID=MagnetocorpMSP
+      - CORE_PEER_LOCALMSPID=DigibankMSP
       - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp
       - CHAINCODE_LOGGING_LEVEL=info
     working_dir: /opt/gopath/src/chaincode
@@ -53,8 +53,8 @@ services:
       - COUCHDB_USER=
       - COUCHDB_PASSWORD=
   
-  couchdbadmin.magnetocorp:
-    container_name: couchdbadmin.magnetocorp.hyperfabrics.com
+  couchdbadmin.digibank:
+    container_name: couchdbadmin.digibank.hyperfabrics.com
     extends:
       service: couchdb
     environment:
@@ -63,168 +63,168 @@ services:
     ports:
       - 6984:5984
     
-  couchdb0.magnetocorp:
-    container_name: couchdb0.magnetocorp.hyperfabrics.com
+  couchdb0.digibank:
+    container_name: couchdb0.digibank.hyperfabrics.com
     extends:
       service: couchdb
     ports:
       - 7984:5984
   
-  couchdb1.magnetocorp:
-    container_name: couchdb1.magnetocorp.hyperfabrics.com
+  couchdb1.digibank:
+    container_name: couchdb1.digibank.hyperfabrics.com
     extends:
       service: couchdb
     ports:
       - 8984:5984
   
-  couchdb2.magnetocorp:
-    container_name: couchdb2.magnetocorp.hyperfabrics.com
+  couchdb2.digibank:
+    container_name: couchdb2.digibank.hyperfabrics.com
     extends:
       service: couchdb
     ports:
       - 9984:5984
 
-  admin.magnetocorp:
-    container_name: admin.magnetocorp.hyperfabrics.com
+  admin.digibank:
+    container_name: admin.digibank.hyperfabrics.com
     extends:
       service: peer
     environment:
-      - CORE_PEER_ID=admin.magnetocorp
-      - CORE_PEER_ADDRESS=admin.magnetocorp.hyperfabrics.com:7051
-      - CORE_PEER_CHAINCODE_LISTENADDRESS=chaincodeadmin.magnetocorp.hyperfabrics.com:7052
-      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdbadmin.magnetocorp.hyperfabrics.com:5984
-      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=admin.magnetocorp.hyperfabrics.com:7051
+      - CORE_PEER_ID=admin.digibank
+      - CORE_PEER_ADDRESS=admin.digibank.hyperfabrics.com:7051
+      - CORE_PEER_CHAINCODE_LISTENADDRESS=chaincodeadmin.digibank.hyperfabrics.com:7052
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdbadmin.digibank.hyperfabrics.com:5984
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=admin.digibank.hyperfabrics.com:7051
     command: "chmod 755 * && ./launch-peer.sh"
     volumes:
         - ./:/opt/gopath/src/github.com/hyperledger/fabric/peer
         - ./msps/admin/msp:/etc/hyperledger/fabric/msp
-        -  admin.magnetocorp.hyperfabrics.com:/var/hyperledger/production
+        -  admin.digibank.hyperfabrics.com:/var/hyperledger/production
     ports:
       - 6051:7051
       - 6053:7053
     depends_on:
-     - couchdbadmin.magnetocorp.hyperfabrics.com
+     - couchdbadmin.digibank.hyperfabrics.com
   
-    peer0.magnetocorp:
-    container_name: peer0.magnetocorp.hyperfabrics.com
+    peer0.digibank:
+    container_name: peer0.digibank.hyperfabrics.com
     extends:
       service: peer
     environment:
-      - CORE_PEER_ID=peer0.magnetocorp
-      - CORE_PEER_ADDRESS=peer0.magnetocorp.hyperfabrics.com:7051
-      - CORE_PEER_CHAINCODE_LISTENADDRESS=chaincode0.magnetocorp.hyperfabrics.com:7052
-      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb0.magnetocorp.hyperfabrics.com:5984
-      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.magnetocorp.hyperfabrics.com:7051
+      - CORE_PEER_ID=peer0.digibank
+      - CORE_PEER_ADDRESS=peer0.digibank.hyperfabrics.com:7051
+      - CORE_PEER_CHAINCODE_LISTENADDRESS=chaincode0.digibank.hyperfabrics.com:7052
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb0.digibank.hyperfabrics.com:5984
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.digibank.hyperfabrics.com:7051
     command: "chmod 755 * && ./launch-peer.sh"
     volumes:
         - ./msps/peer0/msp:/etc/hyperledger/fabric/msp
-        -  peer0.magnetocorp.hyperfabrics.com:/var/hyperledger/production
+        -  peer0.digibank.hyperfabrics.com:/var/hyperledger/production
     ports:
       - 7051:7051
       - 7053:7053
     depends_on:
-     - couchdb0.magnetocorp.hyperfabrics.com
+     - couchdb0.digibank.hyperfabrics.com
     
-    peer1.magnetocorp:
-    container_name: peer1.magnetocorp.hyperfabrics.com
+    peer1.digibank:
+    container_name: peer1.digibank.hyperfabrics.com
     extends:
       service: peer
     environment:
-      - CORE_PEER_ID=peer1.magnetocorp
-      - CORE_PEER_ADDRESS=peer1.magnetocorp.hyperfabrics.com:7051
-      - CORE_PEER_CHAINCODE_LISTENADDRESS=chaincode1.magnetocorp.hyperfabrics.com:7052
-      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb1.magnetocorp.hyperfabrics.com:5984
-      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.magnetocorp.hyperfabrics.com:7051
+      - CORE_PEER_ID=peer1.digibank
+      - CORE_PEER_ADDRESS=peer1.digibank.hyperfabrics.com:7051
+      - CORE_PEER_CHAINCODE_LISTENADDRESS=chaincode1.digibank.hyperfabrics.com:7052
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb1.digibank.hyperfabrics.com:5984
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.digibank.hyperfabrics.com:7051
     command: "chmod 755 * && ./launch-peer.sh"
     volumes:
         - ./msps/peer1/msp:/etc/hyperledger/fabric/msp
-        -  peer1.magnetocorp.hyperfabrics.com:/var/hyperledger/production
+        -  peer1.digibank.hyperfabrics.com:/var/hyperledger/production
     ports:
       - 8051:7051
       - 8053:7053
     depends_on:
-     - couchdb1.magnetocorp.hyperfabrics.com
+     - couchdb1.digibank.hyperfabrics.com
     
-    peer2.magnetocorp:
-    container_name: peer2.magnetocorp.hyperfabrics.com
+    peer2.digibank:
+    container_name: peer2.digibank.hyperfabrics.com
     extends:
       service: peer
     environment:
-      - CORE_PEER_ID=peer2.magnetocorp
-      - CORE_PEER_ADDRESS=peer2.magnetocorp.hyperfabrics.com:7051
-      - CORE_PEER_CHAINCODE_LISTENADDRESS=chaincode2.magnetocorp.hyperfabrics.com:7052
-      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb2.magnetocorp.hyperfabrics.com:5984
-      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer2.magnetocorp.hyperfabrics.com:7051
+      - CORE_PEER_ID=peer2.digibank
+      - CORE_PEER_ADDRESS=peer2.digibank.hyperfabrics.com:7051
+      - CORE_PEER_CHAINCODE_LISTENADDRESS=chaincode2.digibank.hyperfabrics.com:7052
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb2.digibank.hyperfabrics.com:5984
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer2.digibank.hyperfabrics.com:7051
     command: "chmod 755 * && ./launch-peer.sh"
     volumes:
         - ./msps/peer2/msp:/etc/hyperledger/fabric/msp
-        - peer2.magnetocorp.hyperfabrics.com:/var/hyperledger/production
+        - peer2.digibank.hyperfabrics.com:/var/hyperledger/production
     ports:
       - 9051:7051
       - 9053:7053
     depends_on:
-     - couchdb2.magnetocorp.hyperfabrics.com
+     - couchdb2.digibank.hyperfabrics.com
 
 
     chaincode.admin:
-    container_name: chaincodeadmin.magnetocorp.hyperfabrics.com
+    container_name: chaincodeadmin.digibank.hyperfabrics.com
     extends:
       service: chaincode
     environment:
-      - CORE_PEER_ID=admin.magnetocorp
-      - CORE_PEER_ADDRESS=admin.magnetocorp.hyperfabrics.com:7051
+      - CORE_PEER_ID=admin.digibank
+      - CORE_PEER_ADDRESS=admin.digibank.hyperfabrics.com:7051
     volumes:
         - .msps/admin/msp:/etc/hyperledger/msp
     ports: 
       - 6052:7052
     depends_on:
-     - admin.magnetocorp.hyperfabrics.com
-     - couchdbadmin.magnetocorp.hyperfabrics.com
+     - admin.digibank.hyperfabrics.com
+     - couchdbadmin.digibank.hyperfabrics.com
    
     chaincode.peer0:
-    container_name: chaincode0.magnetocorp.hyperfabrics.com
+    container_name: chaincode0.digibank.hyperfabrics.com
     extends:
       service: chaincode
     environment:
-      - CORE_PEER_ID=peer0.magnetocorp
-      - CORE_PEER_ADDRESS=peer0.magnetocorp.hyperfabrics.com:7051
+      - CORE_PEER_ID=peer0.digibank
+      - CORE_PEER_ADDRESS=peer0.digibank.hyperfabrics.com:7051
     volumes:
       - ./msps/peer0/msp:/etc/hyperledger/msp
     ports: 
       - 7052:7052
     depends_on:
-     - peer0.magnetocorp.hyperfabrics.com
-     - couchdb0.magnetocorp.hyperfabrics.com
+     - peer0.digibank.hyperfabrics.com
+     - couchdb0.digibank.hyperfabrics.com
     
     chaincode.peer1:
-    container_name: chaincode1.magnetocorp.hyperfabrics.com
+    container_name: chaincode1.digibank.hyperfabrics.com
     extends:
       service: chaincode
     environment:
-      - CORE_PEER_ID=peer1.magnetocorp
-      - CORE_PEER_ADDRESS=peer1.magnetocorp.hyperfabrics.com:7051
+      - CORE_PEER_ID=peer1.digibank
+      - CORE_PEER_ADDRESS=peer1.digibank.hyperfabrics.com:7051
     volumes:
       - ./msps/peer1/msp:/etc/hyperledger/msp
     ports: 
       - 8052:7052
     depends_on:
-     - peer1.magnetocorp.hyperfabrics.com
-     - couchdb1.magnetocorp.hyperfabrics.com
+     - peer1.digibank.hyperfabrics.com
+     - couchdb1.digibank.hyperfabrics.com
 
     chaincode.peer2:
-    container_name: chaincode2.magnetocorp.hyperfabrics.com
+    container_name: chaincode2.digibank.hyperfabrics.com
     extends:
       service: chaincode
     environment:
-      - CORE_PEER_ID=peer2.magnetocorp
-      - CORE_PEER_ADDRESS=peer2.magnetocorp.hyperfabrics.com:7051
+      - CORE_PEER_ID=peer2.digibank
+      - CORE_PEER_ADDRESS=peer2.digibank.hyperfabrics.com:7051
     volumes:
       - ./msps/peer2/msp:/etc/hyperledger/msp
     ports: 
       - 9052:7052
     depends_on:
-     - peer2.magnetocorp.hyperfabrics.com
-     - couchdb2.magnetocorp.hyperfabrics.com
+     - peer2.digibank.hyperfabrics.com
+     - couchdb2.digibank.hyperfabrics.com
 
       
 

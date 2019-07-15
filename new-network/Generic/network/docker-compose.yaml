@@ -9,25 +9,29 @@ services:
   peer:
     image: hyperledger/fabric-peer:$IMAGE_TAG
     environment:
+      - CORE_PEER_LOCALMSPID=DigibankMSP
       - CORE_PEER_ADDRESS=peer:7051
-      - CORE_PEER_CHAINCODE_LISTEN_ADDRESS=chaincode:7052
+      - CORE_PEER_CHAINCODE_LISTENADDRESS=chaincode:7052
       - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb:5984
+      - ORDERER_ADDRESS=192.168.0.1:7050
+      - FABRIC_CFG_PATH= /opt/gopath/src/github.com/hyperledger/fabric/peer
+      - COMMERCIALPAPER_CHANNEL_BLOCK_0=./commercialpaperchannel_0.block
       - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
-      - CORE_PEER_NETWORKID= commercial-paper-network
+      - CORE_PEER_NETWORKID= commercialpaper-network
       - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
       - FABRIC_LOGGING_SPEC=INFO
       - CORE_PEER_TLS_ENABLED=false
       - CORE_PEER_GOSSIP_USELEADERELECTION=true
       - CORE_PEER_GOSSIP_ORGLEADER=false
       - CORE_PEER_PROFILE_ENABLED=true
-      - CORE_PEER_ADDRESSAUTODETECT=true
-      - CORE_PEER_LOCALMSPID=DigibankMSP    
+      - CORE_PEER_ADDRESSAUTODETECT=true    
       - CORE_CHAINCODE_LOGGING_SHIM=INFO
       - CORE_METRICS_ENABLED=false
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
-    command: peer node start 2> peer.log &
+    command: chmod 755 * && peer node start 2> peer.log &
     volumes:
-    - /var/run/:/host/var/run/
+    -  /var/run/:/host/var/run/
+    - ./:/opt/gopath/src/github.com/hyperledger/fabric/peer
 
   chaincode:
     image: hyperledger/fabric-base-image:$IMAGE_TAG
@@ -40,15 +44,14 @@ services:
       - CORE_PEER_ADDRESS=peer:7051
       - CORE_PEER_LOCALMSPID=DigibankMSP
       - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp
+      - CHAINCODE_LOGGING_LEVEL=info
     working_dir: /opt/gopath/src/chaincode
     command: /bin/bash -c 'sleep 6000000'
     volumes:
-        - /var/run/:/host/var/run/
+        -  /var/run/:/host/var/run/
         - ./msp:/etc/hyperledger/msp
         - ./contract:/opt/gopath/src/chaincode
-    depends_on:
-      - peer
-  
+
   couchdb: 
     image: hyperledger/fabric-couchdb
     environment:
@@ -69,9 +72,6 @@ services:
     container_name: couchdb0.digibank.hyperfabrics.com
     extends:
       service: couchdb
-    environment:
-      - COUCHDB_USER=peer0
-      - COUCHDB_PASSWORD=peer0pw
     ports:
       - 7984:5984
   
@@ -79,9 +79,6 @@ services:
     container_name: couchdb1.digibank.hyperfabrics.com
     extends:
       service: couchdb
-    environment:
-      - COUCHDB_USER=peer1
-      - COUCHDB_PASSWORD=peer1pw
     ports:
       - 8984:5984
   
@@ -89,9 +86,6 @@ services:
     container_name: couchdb2.digibank.hyperfabrics.com
     extends:
       service: couchdb
-    environment:
-      - COUCHDB_USER=peer2
-      - COUCHDB_PASSWORD=peer2pw
     ports:
       - 9984:5984
 
@@ -100,13 +94,16 @@ services:
     extends:
       service: peer
     environment:
-      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdbadmin.digibank.hyperfabrics.com:5984
       - CORE_PEER_ID=admin.digibank
       - CORE_PEER_ADDRESS=admin.digibank.hyperfabrics.com:7051
+      - CORE_PEER_CHAINCODE_LISTENADDRESS=chaincodeadmin.digibank.hyperfabrics.com:7052
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdbadmin.digibank.hyperfabrics.com:5984
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=admin.digibank.hyperfabrics.com:7051
+    command: chmod 755 * && ./create-channel.sh
     volumes:
+        - ./:/opt/gopath/src/github.com/hyperledger/fabric/peer
         - ./msps/admin/msp:/etc/hyperledger/fabric/msp
-        - admin.digibank.hyperfabrics.com:/var/hyperledger/production
+        -  admin.digibank.hyperfabrics.com:/var/hyperledger/production
     ports:
       - 6051:7051
       - 6053:7053
@@ -118,13 +115,15 @@ services:
     extends:
       service: peer
     environment:
-      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb0.digibank.hyperfabrics.com:5984
       - CORE_PEER_ID=peer0.digibank
       - CORE_PEER_ADDRESS=peer0.digibank.hyperfabrics.com:7051
+      - CORE_PEER_CHAINCODE_LISTENADDRESS=chaincode0.digibank.hyperfabrics.com:7052
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb0.digibank.hyperfabrics.com:5984
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.digibank.hyperfabrics.com:7051
+    command: chmod 755 * && ./launch-peer.sh
     volumes:
         - ./msps/peer0/msp:/etc/hyperledger/fabric/msp
-        - peer0.digibank.hyperfabrics.com:/var/hyperledger/production
+        -  peer0.digibank.hyperfabrics.com:/var/hyperledger/production
     ports:
       - 7051:7051
       - 7053:7053
@@ -136,10 +135,12 @@ services:
     extends:
       service: peer
     environment:
-      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb1.digibank.hyperfabrics.com:5984
       - CORE_PEER_ID=peer1.digibank
       - CORE_PEER_ADDRESS=peer1.digibank.hyperfabrics.com:7051
+      - CORE_PEER_CHAINCODE_LISTENADDRESS=chaincode1.digibank.hyperfabrics.com:7052
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb1.digibank.hyperfabrics.com:5984
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.digibank.hyperfabrics.com:7051
+    command: chmod 755 * && ./launch-peer.sh
     volumes:
         - ./msps/peer1/msp:/etc/hyperledger/fabric/msp
         -  peer1.digibank.hyperfabrics.com:/var/hyperledger/production
@@ -154,10 +155,12 @@ services:
     extends:
       service: peer
     environment:
-      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb2.digibank.hyperfabrics.com:5984
       - CORE_PEER_ID=peer2.digibank
       - CORE_PEER_ADDRESS=peer2.digibank.hyperfabrics.com:7051
+      - CORE_PEER_CHAINCODE_LISTENADDRESS=chaincode2.digibank.hyperfabrics.com:7052
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb2.digibank.hyperfabrics.com:5984
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer2.digibank.hyperfabrics.com:7051
+    command: chmod 755 * && ./launch-peer.sh
     volumes:
         - ./msps/peer2/msp:/etc/hyperledger/fabric/msp
         - peer2.digibank.hyperfabrics.com:/var/hyperledger/production
@@ -176,7 +179,7 @@ services:
       - CORE_PEER_ID=admin.digibank
       - CORE_PEER_ADDRESS=admin.digibank.hyperfabrics.com:7051
     volumes:
-        - ./admin/msp:/etc/hyperledger/msp
+        - .msps/admin/msp:/etc/hyperledger/msp
     ports: 
       - 6052:7052
     depends_on:
@@ -191,7 +194,7 @@ services:
       - CORE_PEER_ID=peer0.digibank
       - CORE_PEER_ADDRESS=peer0.digibank.hyperfabrics.com:7051
     volumes:
-      - ./peer0/msp:/etc/hyperledger/msp
+      - ./msps/peer0/msp:/etc/hyperledger/msp
     ports: 
       - 7052:7052
     depends_on:
@@ -206,7 +209,7 @@ services:
       - CORE_PEER_ID=peer1.digibank
       - CORE_PEER_ADDRESS=peer1.digibank.hyperfabrics.com:7051
     volumes:
-      - ./peer1/msp:/etc/hyperledger/msp
+      - ./msps/peer1/msp:/etc/hyperledger/msp
     ports: 
       - 8052:7052
     depends_on:
@@ -221,7 +224,7 @@ services:
       - CORE_PEER_ID=peer2.digibank
       - CORE_PEER_ADDRESS=peer2.digibank.hyperfabrics.com:7051
     volumes:
-      - ./peer2/msp:/etc/hyperledger/msp
+      - ./msps/peer2/msp:/etc/hyperledger/msp
     ports: 
       - 9052:7052
     depends_on:
