@@ -1,0 +1,52 @@
+version: '2'
+
+services:
+  ${DB_SERVICE}:
+    container_name: ${DB_CONTAINER}
+    extends:
+      file: ./base/peer-base.yaml
+      service: couchdb
+    ports:
+      - "$DB_PORT:5984"
+  
+   ${PEER_SERVICE}:
+    container_name: ${PEER_CONTAINER}
+    extends:
+      file: ./base/peer-base.yaml
+      service: peer
+    environment:
+      - CORE_PEER_ID=${PEER_ID}
+      - CORE_PEER_LOCALMSPID=${MSP_ID}
+      - CORE_PEER_ADDRESS=${PEER_CONTAINER}:7051
+      - CORE_PEER_CHAINCODE_LISTENADDRESS=${CHAINCODE_CONTAINER}:7052
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=${DB_CONTAINER}:5984
+      - ORDERER_ADDRESS=${ORDERER_ADDRESS}      
+    command: "chmod 755 * & ./launch-peer.sh"
+    volumes:
+    - ./network:/opt/gopath/src/github.com/hyperledger/fabric/peer
+    - ./network/msps/${ORG_NAME}/${PEER_NAME}/msp:/etc/hyperledger/msp
+    depends_on:
+    - ${DB_CONTAINER}
+    ports:
+      - "$PEER_PORT:7051"
+      - "$EVENT_PORT:7053"
+  
+
+  
+  ${CHAINCODE_SERVICE}:
+    extends:
+      file: ./base/peer-base.yaml
+      service: chaincode
+    environment:
+      - CORE_PEER_ID=${PEER_CONTAINER}
+      - CORE_PEER_ADDRESS=${PEER_CONTAINER}:7051
+      - CORE_PEER_LOCALMSPID=${MSP_ID}
+      - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp
+      - CHAINCODE_LOGGING_LEVEL=INFO
+    volumes:
+     - ./network/msps/${ORG_NAME}/${PEER_NAME}/msp:/etc/hyperledger/msp
+    -  ./network/contract:/opt/gopath/src/chaincode
+    depends_on:
+      - ${PEER_CONTAINER}
+    ports:
+      - "$CC_PORT:7052"

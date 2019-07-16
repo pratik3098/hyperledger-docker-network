@@ -7,4 +7,3 @@
 
 
 
-Execute create-channel command in Papernet-admin

@@ -16,28 +16,39 @@ fi
 if [ -z $1 ]
 then
     echo "===== Script need to be executed with ORG_NAME and ORDERER ADDRESS===="
-    echo "Usage: ./create-org.sh   org_name   orderer_address "
+    echo "Usage: ./create-org.sh   ORG_NAME   ORDERER_ADDRESS   DOMAIN "
     exit 0
+else 
+   ORG=$1
+   export MSP_ID="$(tr '[:lower:]' '[:upper:]' <<< ${ORG:0:1})${ORG:1}"
+   ORG=${ORG,,}
+   export $ORG_NAME=ORG
 fi
 
 if [ -z $2 ]
 then
-    echo "===== Please enter ORDERER ADDRESS===="
-    echo "Usage: ./create-org.sh   $1   orderer_address "
+    echo "===== Error: ORDERER_ADDRESS empty ===="
+    echo "Usage: ./create-org.sh   $ORG   ORDERER_ADDRESS   DOMAIN "
     exit 0
+else 
+   ORD=$(echo $2| cut -d':' -f 1)
+   export ORDERER_ADDRESS=$ORD
 fi
 
-MSP_ID="$(tr '[:lower:]' '[:upper:]' <<< ${ORG_NAME:0:1})${ORG_NAME:1}"
-ORG=${ORG_NAME,,}
-ORD=$(echo $2| cut -d'_' -f 1)
+if [-z $3]
+then  
+   echo "===== Warning: DOMAIN_ADDRESS not provided ===="
+   echo "===== Setting default domain: hyperfabrics.com ===="
+   export $DOMAIN="hyperfabrics.com"
+else
+   export $DOMAIN=ID=$(echo "$3" | tr '[:upper:]' '[:lower:]')
+fi
 
-export MSP_ID=$MSP_ID"MSP"
-export ORG_NAME=$ORG
-export ORDERER_ADDRESS=$ORD
 
 echo "============== Setting up ORG_NAME: $ORG_NAME =============="
 echo "============== Setting up ORDERER_ADDRESS: $ORDERER_ADDRESS =============="
 echo "============== Setting up MSP_ID: $MSP_ID =============="
+echo "============== Setting up DOMAIN: $DOMAIN =============="
 chmod 755 *
 ./get-docker-images.sh
 cd ./network
