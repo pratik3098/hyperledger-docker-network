@@ -5,6 +5,11 @@
 
 version: '2'
 
+networks:
+  commercialpaper:
+    external:
+      name: commercialpaper-network
+
 services:
   peer:
     image: hyperledger/fabric-peer:$VERSION
@@ -59,7 +64,8 @@ services:
       - COUCHDB_USER=
       - COUCHDB_PASSWORD=
 
-  ca: 
+  ca:
+    container_name: ca.papernet.hyperfabrics.com 
     image: hyperledger/fabric-ca:$VERSION
     environment:
 
@@ -84,7 +90,11 @@ services:
         - ./contract:/opt/gopath/src/chaincodedev/chaincode
         - ./:/opt/gopath/src/chaincodedev/  
     depends_on:
-        - peer
+        - peer2.papernet.hyperfabrics.com
+        - couchdb2.papernet.hyperfabrics.com
+        - chaincode2.papernet.hyperfabrics.com
+    networks:
+        - commercialpaper
 
   
   couchdbadmin.papernet:
