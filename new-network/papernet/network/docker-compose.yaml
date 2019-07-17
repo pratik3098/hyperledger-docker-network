@@ -66,12 +66,35 @@ services:
     working_dir: /opt/gopath/src/chaincode
 
   ca:
-    container_name: ca.papernet.hyperfabrics.com 
+    container_name: ca.hyperfabrics.com 
     image: hyperledger/fabric-ca:$VERSION
     environment:
      - GOPATH=/opt/gopath
      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+     - FABRIC_CA_SERVER_HOME=/etc/hyperledger/fabric-ca-server
+     - FABRIC_CA_ROOT= /opt/gopath/src/github.com/hyperledger/fabric-ca
+     - ROOT_CA_CERTIFICATE=/etc/hyperledger/fabric-ca-server/ca-cert.pem
+     - FABRIC_CA_CLIENT_TLS_ENABLED=false
+     - FABRIC_CA_CLIENT_TLS_CLIENT_CERTFILE=cert2.pem
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric-ca/docker/server
+    command: fabric-ca-server start -n ca.hyperfabrics.com -b admin:adminpw 2> ca-server.log &
+    ports:
+    - "7030:7054"
+
+   ca-client:
+    container_name: caclient.hyperfabrics.com 
+    image: hyperledger/fabric-ca:$VERSION
+    environment:
+     - GOPATH=/opt/gopath
+     - CA_URL= 192.168.0.1:7054
+     - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+     - FABRIC_CA_CLIENT_HOME=/etc/hyperledger/fabric-ca
+     - FABRIC_CA_CLIENT_TLS_ENABLED=false
+     - FABRIC_CA_CLIENT_TLS_CLIENT_CERTFILE=cert2.pem
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric-ca/docker/server
+    command: fabric-ca-server start -n ca.hyperfabrics.com -b admin:adminpw 2> ca-server.log &
+    ports:
+    - "7031:7054"
 
 
   cli: 
@@ -223,7 +246,7 @@ services:
       - CORE_PEER_ID=admin.papernet
       - CORE_PEER_ADDRESS=admin.papernet.hyperfabrics.com:7051
     volumes:
-        - .msps/admin/msp:/etc/hyperledger/msp
+        - ./msps/admin/msp:/etc/hyperledger/msp
     ports: 
       - 6052:7052
     depends_on:
@@ -274,6 +297,27 @@ services:
     depends_on:
      - peer2.papernet.hyperfabrics.com
      - couchdb2.papernet.hyperfabrics.com
+
+    ca.papernet:
+    container: ca.papernet.hyperfabrics.com 
+    extends: 
+      service: ca
+    command: chmod 755 * & ./fabric-ca-server.sh
+    ports: 
+      "7054:7054"
+    
+
+    caclient.papernet:
+    container: caclient.papernet.hyperfabrics.com 
+    extends: ca-client 
+    enviorment: 
+    - CA_URL= 0.0.0.0:7054   
+    command: 
+    volumes: 
+     - ./msps: /etc/hyperledger/fabric-ca
+    ports: 
+    7053:7054
+
 
       
 

@@ -22,7 +22,7 @@ services:
     - ./msps/orderer/msp:/var/hyperledger/orderer/msp
     -  orderer:/var/hyperledger/production/orderer
     ports:
-      - 7050:7050
+      - 7049:7050
 
 
   orderer:
@@ -31,5 +31,21 @@ services:
       service: orderer-base
     volumes:
        -./commercialpaper-genesis.block:/var/hyperledger/orderer/orderer.genesis.block
-
+    ports: 
+      - 7050:7050
   
+
+  ca-client:
+    container_name: caclient.orderer.hyperfabrics.com 
+    image: hyperledger/fabric-ca:$VERSION
+    environment:
+     - GOPATH=/opt/gopath
+     - CA_URL= 192.168.0.1:7054
+     - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+     - FABRIC_CA_CLIENT_HOME=/etc/hyperledger/fabric-ca
+     - FABRIC_CA_CLIENT_TLS_ENABLED=false
+     - FABRIC_CA_CLIENT_TLS_CLIENT_CERTFILE=cert2.pem
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric-ca/docker/server
+    command: fabric-ca-client register --id.type orderer --id.name orderer --id.secret pw --id.affiliation orderer
+    ports:
+    - "7054:7054"

@@ -6,7 +6,7 @@ sleep 10
 peer node status
 
 #3 Fetch the genesis for the channel - this leads to creation of commercialpaperchannel
-peer channel fetch 0  -o $ORDERER_ADDRESS -c commercialpaperchannel
+#peer channel fetch 0  -o $ORDERER_ADDRESS -c commercialpaperchannel
 
 #4 Joing the channel
-peer channel join -b $COMMERCIALPAPER_CHANNEL_BLOCK_0 -o $ORDERER_ADDRESS
+#peer channel join -b $COMMERCIALPAPER_CHANNEL_BLOCK_0 -o $ORDERER_ADDRESS
