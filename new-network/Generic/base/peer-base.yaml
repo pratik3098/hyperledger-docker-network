@@ -110,7 +110,8 @@ services:
       - "5984:5984"
   
 
-   ca:
+
+     ca:
     container_name: ca.papernet.hyperfabrics.com 
     image: hyperledger/fabric-ca:$VERSION
     environment:
@@ -121,22 +122,25 @@ services:
      - ROOT_CA_CERTIFICATE=/etc/hyperledger/fabric-ca-server/ca-cert.pem
      - FABRIC_CA_CLIENT_TLS_ENABLED=false
      - FABRIC_CA_CLIENT_TLS_CLIENT_CERTFILE=cert2.pem
-    working_dir: /opt/gopath/src/github.com/hyperledger/fabric-ca/docker/server
-    command: fabric-ca-server start -n ca.hyperfabrics.com -b admin:adminpw 2> ca-server.log &
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric-ca-server
+    command: chmod 755 * & ./fabric-ca-server.sh
+    volumes: ./network:/opt/gopath/src/github.com/hyperledger/fabric-ca-server
     ports:
     - "7054:7054"
 
    ca-client:
-    container_name: caclient.papernet.hyperfabrics.com 
+    container_name: caclient.hyperfabrics.com 
     image: hyperledger/fabric-ca:$VERSION
     environment:
      - GOPATH=/opt/gopath
-     - CA_URL= 192.168.0.1:7054
+     - CA_URL= 0.0.0.0:7054   
      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
      - FABRIC_CA_CLIENT_HOME=/etc/hyperledger/fabric-ca
      - FABRIC_CA_CLIENT_TLS_ENABLED=false
      - FABRIC_CA_CLIENT_TLS_CLIENT_CERTFILE=cert2.pem
-    working_dir: /opt/gopath/src/github.com/hyperledger/fabric-ca/docker/server
-    command: fabric-ca-server start -n ca.hyperfabrics.com -b admin:adminpw 2> ca-server.log &
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric-ca-server
+    command:  chmod 755 * & ./fabric-ca-client.sh
+    volumees: ./network:/opt/gopath/src/github.com/hyperledger/fabric-ca
     ports:
-    - "7054:7054"
+    - "7064:7054"
+   
