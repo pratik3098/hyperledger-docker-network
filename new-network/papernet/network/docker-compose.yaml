@@ -63,11 +63,15 @@ services:
     environment:
       - COUCHDB_USER=
       - COUCHDB_PASSWORD=
+    working_dir: /opt/gopath/src/chaincode
 
   ca:
     container_name: ca.papernet.hyperfabrics.com 
     image: hyperledger/fabric-ca:$VERSION
     environment:
+     - GOPATH=/opt/gopath
+     - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric-ca/docker/server
 
 
   cli: 
