@@ -127,14 +127,27 @@ services:
 
   admin.papernet:
     container_name: admin.papernet.hyperfabrics.com
-    extends:
-      service: peer
     environment:
       - CORE_PEER_ID=admin.papernet
       - CORE_PEER_ADDRESS=admin.papernet.hyperfabrics.com:7051
-    #  - CORE_PEER_CHAINCODE_LISTENADDRESS=chaincodeadmin.papernet.hyperfabrics.com:7052
+      - CORE_PEER_CHAINCODE_LISTENADDRESS=chaincodeadmin.papernet.hyperfabrics.com:7052
       - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdbadmin.papernet.hyperfabrics.com:5984
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=admin.papernet.hyperfabrics.com:7051
+      - FABRIC_CFG_PATH= /opt/gopath/src/github.com/hyperledger/fabric/peer
+      - COMMERCIALPAPER_CHANNEL_BLOCK_0=./commercialpaperchannel_0.block
+      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+      - CORE_PEER_NETWORKID= commercialpaper-network
+      - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
+      - FABRIC_LOGGING_SPEC=INFO
+      - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp
+      - CORE_PEER_TLS_ENABLED=false
+      - CORE_PEER_GOSSIP_USELEADERELECTION=true
+      - CORE_PEER_GOSSIP_ORGLEADER=false
+      - CORE_PEER_PROFILE_ENABLED=true
+      - CORE_PEER_ADDRESSAUTODETECT=true
+      - CORE_CHAINCODE_LOGGING_SHIM=INFO
+      - CORE_METRICS_ENABLED=false
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
     command: chmod 755 * && ./launch-peer.sh
     volumes:
         - ./:/opt/gopath/src/github.com/hyperledger/fabric/peer
@@ -243,7 +256,7 @@ services:
       service: chaincode
     environment:
       - CORE_PEER_ID=peer1.papernet
-    #  - CORE_PEER_ADDRESS=peer1.papernet.hyperfabrics.com:7051
+      - CORE_PEER_ADDRESS=peer1.papernet.hyperfabrics.com:7051
     volumes:
       - ./msps/peer1/msp:/etc/hyperledger/msp
     ports: 
