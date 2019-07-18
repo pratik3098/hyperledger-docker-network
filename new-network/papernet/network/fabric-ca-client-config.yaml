@@ -40,7 +40,7 @@
 #############################################################################
 
 # URL of the Fabric-ca-server (default: http://localhost:7054)
-url: http://ca.papernet.hyperfabrics.com:7054
+url: http://13.59.68.182:7054
 
 # Membership Service Provider (MSP) directory
 # This is useful when the client is used to enroll a peer or orderer, so
@@ -99,7 +99,7 @@ tls:
 #
 #############################################################################
 csr:
-  cn: admin.papernet
+  cn: caclient.papernet
   keyrequest:
     algo: ecdsa
     size: 256
@@ -124,8 +124,8 @@ csr:
 #                   value.
 #  attributes - List of name/value pairs of attribute for identity
 #############################################################################
-id:
-  name:
+id: 
+  name: 
   type:
   affiliation:
   maxenrollments: 0

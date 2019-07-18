@@ -6,7 +6,7 @@
      - GOPATH=/opt/gopath
      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
      - FABRIC_CA_SERVER_HOME=/etc/hyperledger/fabric-ca-server
-     - FABRIC_CA_CLIENT_HOME=/etc/hyperledger/fabric-ca-server/clients/caclient
+     - FABRIC_CA_CLIENT_HOME=/etc/hyperledger/fabric-ca/clients/caclient
      - FABRIC_CA_ROOT= /opt/gopath/src/github.com/hyperledger/fabric-ca
      - DEFAULT_CLIENT_CONFIG_YAML=/etc/hyperledger/fabric-ca-server/fabric-ca-client.config.yaml
      - ROOT_CA_CERTIFICATE=/etc/hyperledger/fabric-ca-server/ca-cert.pem
@@ -15,9 +15,11 @@
     command: /bin/bash -c "sleep 60000"
     working_dir: /etc/hyperledger/fabric-ca-server
     volumes:
+     - ./network:/etc/hyperledger/fabric-ca/
      - ./network:/etc/hyperledger/fabric-ca-server
     ports:
      - 7054:7054
+     - 9443:9443
 
    ca-client:
     container_name: caclient.papernet.hyperfabrics.com 
@@ -27,7 +29,7 @@
      - GOPATH=/opt/gopath
      - CA_URL= ca.papernet.hyperfabrics.com:7054   
      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
-     - FABRIC_CA_CLIENT_HOME=/etc/hyperledger/fabric-ca/clients/
+     - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca/clients/
      - FABRIC_CA_CLIENT_TLS_ENABLED=false
      - FABRIC_CA_CLIENT_TLS_CLIENT_CERTFILE=cert2.pem
     working_dir: /etc/hyperledger/fabric-ca

@@ -7,3 +7,7 @@
 
 
 
+
+Fabric-CA setup:
+
+Change the URL in fabric-ca-client=-config.yaml
