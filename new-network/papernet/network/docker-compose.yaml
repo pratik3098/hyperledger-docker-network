@@ -5,11 +5,6 @@
 
 version: '2'
 
-networks:
-  commercialpaper:
-    external:
-      name: commercialpaper-network
-
 services:
   peer:
     image: hyperledger/fabric-peer:$VERSION
@@ -38,6 +33,8 @@ services:
     volumes:
     -  /var/run/:/host/var/run/
     - ./:/opt/gopath/src/github.com/hyperledger/fabric/peer
+    ports:
+     - 5051:7051
 
   chaincode:
     image: hyperledger/fabric-nodeenv:$NODEENV_TAG
@@ -52,11 +49,14 @@ services:
       - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp
       - CHAINCODE_LOGGING_LEVEL=info
     working_dir: /opt/gopath/src/chaincode
-    command: /bin/bash -c 'sleep 6000000'
+    command: /bin/bash -c 
     volumes:
         -  /var/run/:/host/var/run/
         - ./msp:/etc/hyperledger/msp
         - ./contract:/opt/gopath/src/chaincode
+    ports:
+        - 5052:7052
+     
 
   couchdb: 
     image: hyperledger/fabric-couchdb:$BASE_DOCKER_TAG
@@ -64,6 +64,8 @@ services:
       - COUCHDB_USER=
       - COUCHDB_PASSWORD=
     working_dir: /opt/gopath/src/chaincode
+    ports: 
+      - 8675:5984 
 
 
 
@@ -90,9 +92,6 @@ services:
         - peer2.papernet.hyperfabrics.com
         - couchdb2.papernet.hyperfabrics.com
         - chaincode2.papernet.hyperfabrics.com
-    networks:
-        - commercialpaper
-
   
   couchdbadmin.papernet:
     container_name: couchdbadmin.papernet.hyperfabrics.com
@@ -125,6 +124,7 @@ services:
     ports:
       - 9984:5984
 
+
   admin.papernet:
     container_name: admin.papernet.hyperfabrics.com
     extends:
@@ -132,7 +132,7 @@ services:
     environment:
       - CORE_PEER_ID=admin.papernet
       - CORE_PEER_ADDRESS=admin.papernet.hyperfabrics.com:7051
-      - CORE_PEER_CHAINCODE_LISTENADDRESS=chaincodeadmin.papernet.hyperfabrics.com:7052
+    #  - CORE_PEER_CHAINCODE_LISTENADDRESS=chaincodeadmin.papernet.hyperfabrics.com:7052
       - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdbadmin.papernet.hyperfabrics.com:5984
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=admin.papernet.hyperfabrics.com:7051
     command: chmod 755 * && ./launch-peer.sh
@@ -145,8 +145,7 @@ services:
       - 6053:7053
     depends_on:
      - couchdbadmin.papernet.hyperfabrics.com
-     - cli.papernet.hyperfabrics.com  
-    
+ 
     peer0.papernet:
     container_name: peer0.papernet.hyperfabrics.com
     extends:
@@ -244,7 +243,7 @@ services:
       service: chaincode
     environment:
       - CORE_PEER_ID=peer1.papernet
-      - CORE_PEER_ADDRESS=peer1.papernet.hyperfabrics.com:7051
+    #  - CORE_PEER_ADDRESS=peer1.papernet.hyperfabrics.com:7051
     volumes:
       - ./msps/peer1/msp:/etc/hyperledger/msp
     ports: 
@@ -267,10 +266,3 @@ services:
     depends_on:
      - peer2.papernet.hyperfabrics.com
      - couchdb2.papernet.hyperfabrics.com
-
-
-      
-
-      
-
-    
