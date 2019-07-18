@@ -15,7 +15,7 @@
     command: /bin/bash -c "sleep 60000"
     working_dir: /etc/hyperledger/fabric-ca-server
     volumes:
-     - ./network:/etc/hyperledger/fabric-ca/
+     - ./network/fabric-ca:/etc/hyperledger/fabric-ca/
      - ./network:/etc/hyperledger/fabric-ca-server
     ports:
      - 7054:7054
@@ -34,6 +34,7 @@
      - FABRIC_CA_CLIENT_TLS_CLIENT_CERTFILE=cert2.pem
     working_dir: /etc/hyperledger/fabric-ca
     volumes: 
+      - ./network/fabric-ca:/etc/hyperledger/fabric-ca
       - ./network:/etc/hyperledger/fabric-ca
     ports:
      - 7064:7054
