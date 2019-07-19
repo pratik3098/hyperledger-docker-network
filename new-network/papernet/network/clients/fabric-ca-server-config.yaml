@@ -86,9 +86,9 @@ tls:
 #############################################################################
 ca:
   # Name of this CA
-  name: ca.papernet.hyperfabrics.com
+  name:
   # Key file (is only used to import a private key into BCCSP)
-  keyfile: 
+  keyfile:
   # Certificate file (default: ca-cert.pem)
   certfile:
   # Chain file
@@ -129,10 +129,10 @@ registry:
 
   # Contains identity information which is used when LDAP is disabled
   identities:
-     - name: caclient.papernet.hyperfabrics.com
-       pass: pw
+     - name: admin
+       pass: adminpw
        type: client
-       affiliation: "papernet"
+       affiliation: ""
        attrs:
           hf.Registrar.Roles: "*"
           hf.Registrar.DelegateRoles: "*"
@@ -318,7 +318,7 @@ csr:
         O: Hyperledger
         OU: Fabric
    hosts:
-     - d861d1aab904
+     - d08a0c77b722
      - localhost
    ca:
       expiry: 131400h
