@@ -3,14 +3,15 @@ version: '2'
 services:
  chaincode:
     container_name: chaincode.hyperfabrics.com
-    image: hyperledger/fabric-base-image:$IMAGE_TAG
+    image: hyperledger/fabric-ccenv:1.4.1
     tty: true
+    restart: always
     environment:
       - GOPATH=/opt/gopath
       - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
       - FABRIC_LOGGING_SPEC=DEBUG
       - CORE_PEER_ID=peer
-      - CORE_PEER_ADDRESS=peer:7051
+      - CORE_PEER_ADDRESS=peer.hyperfabrics.com:7051
       - CORE_PEER_LOCALMSPID=DigibankMSP
       - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp
       - CHAINCODE_LOGGING_LEVEL=info
@@ -20,3 +21,5 @@ services:
         -  /var/run/:/host/var/run/
         - ./msp:/etc/hyperledger/msp
         - ./contract:/opt/gopath/src/chaincode
+    ports: 
+        - "7052:7052"
