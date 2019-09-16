@@ -3,6 +3,7 @@ version: '2'
 services:
   peer:
     tty: true
+    container_name: peer.hyperfabrics.com
     image: hyperledger/fabric-peer:1.4.1
     environment:
       - CORE_PEER_ID=peer.org 
@@ -10,7 +11,7 @@ services:
       - CORE_PEER_ADDRESS=peer:7051
       - CORE_PEER_CHAINCODE_LISTENADDRESS=chaincode:7052
       - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb:5984
-      - ORDERER_ADDRESS=192.168.0.1:7050
+      #- ORDERER_ADDRESS=192.168.0.1:7050
       - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp
       - FABRIC_CFG_PATH= /opt/gopath/src/github.com/hyperledger/fabric/peer
       - COMMERCIALPAPER_CHANNEL_BLOCK_0=/opt/gopath/src/github.com/hyperledger/fabric/peer/commercialpaperchannel_0.block
@@ -26,10 +27,10 @@ services:
       - CORE_CHAINCODE_LOGGING_SHIM=INFO
       - CORE_METRICS_ENABLED=false
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
-    command: peer node start 2> peer.log &
+    #command: peer node start 2> peer.log &
     volumes:
     -  /var/run/:/host/var/run/
-    - ./network/:/opt/gopath/src/github.com/hyperledger/fabric/peer
+    #- ./network/:/opt/gopath/src/github.com/hyperledger/fabric/peer
     ports:
       - "7051:7051"
       - "7053:7053"
