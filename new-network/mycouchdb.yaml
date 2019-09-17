@@ -3,7 +3,7 @@ version: '2'
 services:
  couchdb:
     container_name: couchdb.hyperfabrics.com 
-    image: hyperledger/fabric-couchdb:s390x-0.4.15
+    image: hyperledger/fabric-couchdb:0.4.15
     tty: true
     restart: always
     environment:
