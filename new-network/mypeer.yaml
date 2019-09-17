@@ -9,9 +9,9 @@ services:
     environment:
       - CORE_PEER_ID=peer.org 
       - CORE_PEER_LOCALMSPID=OrgMSP
-      - CORE_PEER_ADDRESS=peer:7051
-      - CORE_PEER_CHAINCODE_LISTENADDRESS=chaincode:7052
-      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb:5984
+      - CORE_PEER_ADDRESS=peer.hyperfabrics.com:7051
+      - CORE_PEER_CHAINCODE_LISTENADDRESS=chaincode.hyperfabrics.com:7052
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb.hyperfabrics.com:5984
       - ORDERER_ADDRESS=192.168.0.1:7050
       - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp
       - FABRIC_CFG_PATH= /opt/gopath/src/github.com/hyperledger/fabric/peer

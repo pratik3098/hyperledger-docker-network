@@ -102,6 +102,7 @@ services:
   couchdb: 
     image: hyperledger/fabric-couchdb:$BASE_DOCKER_TAG
     environment:
+      - CORE_PEER_ADDRESS=peer:7051
       - COUCHDB_USER=
       - COUCHDB_PASSWORD=
     volumes:
@@ -111,7 +112,7 @@ services:
   
 
 
-     ca:
+    ca:
     container_name: ca.papernet.hyperfabrics.com 
     image: hyperledger/fabric-ca:$VERSION
     environment:
