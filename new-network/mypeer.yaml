@@ -58,6 +58,21 @@ services:
         - ./contract:/opt/gopath/src/chaincode
     ports: 
         - "7052:7052"
+  
+  couchdb:
+    container_name: couchdb.hyperfabrics.com 
+    image: hyperledger/fabric-couchdb:0.4.15
+    tty: true
+    restart: always
+    environment:
+      - CORE_PEER_ADDRESS=peer.hyperfabrics.com:7051
+      - COUCHDB_USER=
+      - COUCHDB_PASSWORD=
+    volumes:
+        -  /var/run/:/host/var/run/
+    command: /bin/bash -c 'sleep 6000000'
+    ports:
+      - "5984:5984"
 
   
 
