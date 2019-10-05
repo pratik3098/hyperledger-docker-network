@@ -35,7 +35,7 @@ services:
     command:  /bin/bash -c 'sleep 6000000' 
     volumes:
     -  /var/run/:/host/var/run/
-    - ./Digibank/fabric-ca/client/digibank/digibank-peer1/msp:/etc/hyperledger/msp
+    - ../msps/digibank/digibank-peer1/msp:/etc/hyperledger/msp
     ports:
        - "7051:7051"
        - "7053:7053"
@@ -61,7 +61,7 @@ services:
     command: /bin/bash -c 'sleep 6000000'
     volumes:
         -  /var/run/:/host/var/run/
-        - ./Digibank/fabric-ca/client/digibank/digibank-peer1/msp:/etc/hyperledger/msp
+       # - ../msps/digibank/digibank-peer1/msp:/etc/hyperledger/msp
     ports: 
         - "7052:7052"
     depends_on:
@@ -88,7 +88,7 @@ services:
       - COUCHDB_WARM_INDEXES_AFTER_NBLOCKS=1
     volumes:
         -  /var/run/:/host/var/run/
-        - ./Digibank/fabric-ca/client/digibank/digibank-peer1/msp:/etc/hyperledger/msp
+        #- ../msps/digibank/digibank-peer1/msp:/etc/hyperledger/msp
     command: /bin/bash -c 'sleep 6000000'
     ports:
       - "5984:5984"
@@ -111,7 +111,7 @@ services:
     command: /bin/bash
     volumes:
         - /var/run/:/host/var/run/
-        - ./organization:/opt/gopath/src/github.com/
+        - ../:/opt/gopath/src/github.com/
     depends_on:
         - peer
 
