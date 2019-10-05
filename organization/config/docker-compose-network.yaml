@@ -36,6 +36,7 @@ services:
     volumes:
     -  /var/run/:/host/var/run/
     - ../msps/digibank/digibank-peer1/msp:/etc/hyperledger/msp
+    - ../peer:/opt/gopath/src/github.com/hyperledger/fabric/peer
     ports:
        - "7051:7051"
        - "7053:7053"
@@ -112,6 +113,7 @@ services:
     volumes:
         - /var/run/:/host/var/run/
         - ../:/opt/gopath/src/github.com/
+        - ../peer:/opt/gopath/src/github.com/hyperledger/fabric/peer
     depends_on:
         - peer
 
