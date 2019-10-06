@@ -7,15 +7,15 @@
 
 
 #1 Generate the Genesis block
-mkdir -p ./artefacts
-export FABRIC_CFG_PATH=$PWD
-GENESIS_FILE=./artefacts/commercialpaper-genesis.block
+
+#export FABRIC_CFG_PATH=$PWD
+GENESIS_FILE=./commercialpaper-genesis.block
 CHANNEL_NAME=ordererchannel
 echo "====> Generating Genesis"
 configtxgen -profile CommercialPaperOrdererGenesis -channelID $CHANNEL_NAME -outputBlock $GENESIS_FILE
 
 #3 Generate the commercialpaper channel transaction file
-CHANNEL_TX_FILE=./artefacts/commercialpaper-channel.tx
+CHANNEL_TX_FILE=./commercialpaper-channel.tx
 CHANNEL_NAME=commercialpaperchannel
 echo "====> Generating Channel Tx"
 configtxgen -profile CommercialPaperChannel -outputCreateChannelTx $CHANNEL_TX_FILE -channelID $CHANNEL_NAME
