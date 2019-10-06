@@ -2,7 +2,7 @@ function    usage {
     echo  "Usage: ./chain-test.sh    install | instantiate | invoke | query "
     echo  "Utility for testing peer/channel setup with chaincode"
 }
-source ./set-env.sh
+#source ./set-env.sh
 # Uses the core.yaml file in current folder - copy of core.yaml under cloud/bins/peer
 if [ -z $1 ];
 then
