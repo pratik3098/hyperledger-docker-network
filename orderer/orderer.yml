@@ -1,0 +1,25 @@
+orderer:
+    image: hyperledger/fabric-orderer:1.4.1
+    container_name: orderer.hyperfabrics.com
+    tty: true
+    restart: always
+    environment:
+      - ORDERER_GENERAL_LISTENADDRESS=orderer.hyperfabrics.com:7050
+      - ORDERER_GENERAL_LOCALMSPID=OrdererMSP
+      - FABRIC_LOGGING_SPEC=INFO
+      #- FABRIC_CFG_PATH=/opt/gopath/src/github.com/hyperledger/fabric/orderer
+      - ORDERER_GENERAL_GENESISMETHOD=file
+      - ORDERER_GENERAL_GENESISFILE=/var/hyperledger/fabric/orderer/commercialpaper-genesis.block
+      - ORDERER_GENERAL_LOCALMSPDIR=/var/hyperledger/msp
+      - ORDERER_GENERAL_TLS_ENABLED=false
+      - ORDERER_GENERAL_TLS_PRIVATEKEY=/var/hyperledger/msp/tls/server.key
+      - ORDERER_GENERAL_TLS_CERTIFICATE=/var/hyperledger/msp/tls/server.crt
+      - ORDERER_GENERAL_TLS_ROOTCAS=[/var/hyperledger/msp/tls/ca.crt]
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/orderer
+    command: orderer
+    volumes:
+      -  /var/run/:/host/var/run/
+      - ./msp:/var/hyperledger/msp
+      - ./artefacts:/opt/gopath/src/github.com/hyperledger/fabric/orderer/
+    ports:
+      - "7050:7050"
