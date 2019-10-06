@@ -15,7 +15,7 @@ services:
       - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb.hyperfabrics.com:5984
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer.hyperfabrics.com:7051
       - ORDERER_ADDRESS=18.189.6.26:7050
-      - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp
+      - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp/
       #- FABRIC_CFG_PATH= /opt/gopath/src/github.com/hyperledger/fabric/peer
       - COMMERCIALPAPER_CHANNEL_BLOCK_0=/opt/gopath/src/github.com/hyperledger/fabric/peer/commercialpaperchannel_0.block
       - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
@@ -32,7 +32,7 @@ services:
       - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=
       - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
-    command:  /bin/bash -c 'sleep 6000000' 
+    command:  peer node start 
     volumes:
     -  /var/run/:/host/var/run/
     - ../msps/digibank/digibank-peer1/msp:/etc/hyperledger/msp
@@ -62,7 +62,6 @@ services:
     command: /bin/bash -c 'sleep 6000000'
     volumes:
         -  /var/run/:/host/var/run/
-       # - ../msps/digibank/digibank-peer1/msp:/etc/hyperledger/msp
     ports: 
         - "7052:7052"
     depends_on:
@@ -89,7 +88,6 @@ services:
       - COUCHDB_WARM_INDEXES_AFTER_NBLOCKS=1
     volumes:
         -  /var/run/:/host/var/run/
-        #- ../msps/digibank/digibank-peer1/msp:/etc/hyperledger/msp
     command: /bin/bash -c 'sleep 6000000'
     ports:
       - "5984:5984"
@@ -105,7 +103,6 @@ services:
       - FABRIC_LOGGING_SPEC=info
       - CORE_PEER_ID=cli.hyperfabrics.com
       - CORE_PEER_ADDRESS=peer.hyperfabrics.com:7051
-      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer.hyperfabrics.com:7051
       - CORE_PEER_LOCALMSPID=DigibankMSP
       - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp
       - CORE_CHAINCODE_KEEPALIVE=10
@@ -115,7 +112,7 @@ services:
         - /var/run/:/host/var/run/
         - ../:/opt/gopath/src/github.com/
         - ../peer:/opt/gopath/src/github.com/hyperledger/fabric/peer
-        - ../msps/digibank/digibank-peer1/msp:/etc/hyperledger/msp
+        - ../msps/digibank/admin/msp:/etc/hyperledger/msp
     depends_on:
         - peer
 

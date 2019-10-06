@@ -12,4 +12,4 @@ export CORE_PEER_LOCALMSPID=DigibankMSP
 export CORE_PEER_ID=digibank-peer1
 
 # Admin identity used for commands
-export CORE_PEER_MSPCONFIGPATH=./fabric-ca/client/digibank/admin/msp
+export CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp/admin/msp
