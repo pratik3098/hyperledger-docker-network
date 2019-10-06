@@ -15,7 +15,7 @@ Organizations:
   - &Papernet
     Name: Papernet
     ID: PapernetMSP
-    MSPDir: ./fabric-ca/client/papernet/msp
+    MSPDir: ../msp
     Policies: &PapernetPolicies
       Readers:
           Type: Signature
@@ -30,7 +30,7 @@ Organizations:
   - &Digibank
     Name: Digibank
     ID: DigibankMSP
-    MSPDir: ./fabric-ca/client/digibank/msp
+    MSPDir: ../msp
     Policies: &DigibankPolicies
       Readers:
           Type: Signature
@@ -50,7 +50,7 @@ Organizations:
   - &Magnetocorp
     Name: Magnetocorp
     ID: MagnetocorpMSP
-    MSPDir: ./fabric-ca/client/magnetocorp/msp
+    MSPDir: ../msp
     Policies: &MagnetocorpPolicies
       Readers:
           Type: Signature

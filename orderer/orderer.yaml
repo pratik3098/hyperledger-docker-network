@@ -4,12 +4,12 @@ orderer:
     tty: true
     restart: always
     environment:
-      - ORDERER_GENERAL_LISTENADDRESS=orderer.hyperfabrics.com:7050
+      - ORDERER_GENERAL_LISTENADDRESS=127.0.0.1
+      - ORDERER_GENERAL_LISTENPORT=7050
       - ORDERER_GENERAL_LOCALMSPID=OrdererMSP
       - FABRIC_LOGGING_SPEC=INFO
-      #- FABRIC_CFG_PATH=/opt/gopath/src/github.com/hyperledger/fabric/orderer
       - ORDERER_GENERAL_GENESISMETHOD=file
-      - ORDERER_GENERAL_GENESISFILE=/var/hyperledger/fabric/orderer/commercialpaper-genesis.block
+      - ORDERER_GENERAL_GENESISFILE=/opt/gopath/src/github.com/hyperledger/fabric/orderer/commercialpaper-genesis.block
       - ORDERER_GENERAL_LOCALMSPDIR=/var/hyperledger/msp
       - ORDERER_GENERAL_TLS_ENABLED=false
       - ORDERER_GENERAL_TLS_PRIVATEKEY=/var/hyperledger/msp/tls/server.key
