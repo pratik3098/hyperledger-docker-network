@@ -3,7 +3,7 @@
 
 # Create the commercialpaper channel
 # Orderer Address env variable is getting set in the set-env.sh
-source  ./set-env.sh
+#source  ./set-env.sh
 
 # The transaction file was copied over in Part 2
 export CHANNEL_TX_FILE=./commercialpaper-channel.tx

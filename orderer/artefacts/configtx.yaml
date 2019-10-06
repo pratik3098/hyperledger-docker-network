@@ -30,7 +30,7 @@ Organizations:
   - &Digibank
     Name: Digibank
     ID: DigibankMSP
-    MSPDir: ../msp
+    MSPDir: ../digibank/msp
     Policies: &DigibankPolicies
       Readers:
           Type: Signature
@@ -42,7 +42,7 @@ Organizations:
           Type: Signature
           Rule: "OR('DigibankMSP.admin')"
     AnchorPeers:
-      - Host: 18.218.128.226
+      - Host: 18.191.183.187
         Port: 7051
       # You may add additional hosts here
 
@@ -50,7 +50,7 @@ Organizations:
   - &Magnetocorp
     Name: Magnetocorp
     ID: MagnetocorpMSP
-    MSPDir: ../msp
+    MSPDir: ../digibank/msp
     Policies: &MagnetocorpPolicies
       Readers:
           Type: Signature
@@ -73,7 +73,7 @@ Orderer: &OrdererDefaults
   OrdererType: solo
 
   Addresses:
-    - 13.59.139.33:7050
+    - 3.19.31.198:7050
 
     # Policies for Orderer
   Policies:
