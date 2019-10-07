@@ -1,7 +1,7 @@
 # Copyright 2018 @ http://ACloudFan.com 
 # Part of a online course. Please check it out at http://www.acloudfan.com
 
-source ./set-env.sh
+#source ./set-env.sh
 
 export COMMERCIALPAPER_CHANNEL_BLOCK_0=./commercialpaperchannel_0.block
 
