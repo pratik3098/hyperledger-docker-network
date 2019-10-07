@@ -2,7 +2,7 @@ version: '2'
 
 services:
   peer:
-    container_name: peer.hyperfabrics.com
+    container_name: peer.digibank.hyperfabrics.com
     image: hyperledger/fabric-peer:1.4.1
     tty: true
     restart: always
@@ -10,11 +10,11 @@ services:
       - GOPATH=/opt/gopath/
       - CORE_PEER_ID=digibank-peer1
       - CORE_PEER_LOCALMSPID=DigibankMSP
-      - CORE_PEER_ADDRESS=peer.hyperfabrics.com:7051
-      - CORE_PEER_CHAINCODE_LISTENADDRESS=chaincode.hyperfabrics.com:7052
+      - CORE_PEER_ADDRESS=peer.digibank.hyperfabrics.com:7051
+      - CORE_PEER_CHAINCODE_LISTENADDRESS=chaincode.digibank.hyperfabrics.com:7052
       - CORE_LEDGER_STATE_STATEDATABSE=CouchDB
-      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb.hyperfabrics.com:5984
-      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer.hyperfabrics.com:7051
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb.digibank.hyperfabrics.com:5984
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer.digibank.hyperfabrics.com:7051
       - ORDERER_ADDRESS=3.19.31.198:7050
       - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp/
       - CORE_PEER_FILESYSTEMPATH=/opt/gopath/src/github.com/hyperledger/fabric/ledger
@@ -44,7 +44,7 @@ services:
        - "7053:7053"
   
   chaincode:
-    container_name: chaincode.hyperfabrics.com
+    container_name: chaincode.digibank.hyperfabrics.com
     image: hyperledger/fabric-ccenv:1.4.1
     restart: always
     environment:
@@ -52,11 +52,11 @@ services:
       - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
       - FABRIC_LOGGING_SPEC=DEBUG
       - CORE_LEDGER_STATE_STATEDATABSE=CouchDB
-      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb.hyperfabrics.com:5984
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb.digibank.hyperfabrics.com:5984
       - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=
       - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=
       - CORE_PEER_ID=digibank-peer1
-      - CORE_PEER_ADDRESS=peer.hyperfabrics.com:7051
+      - CORE_PEER_ADDRESS=peer.digibank.hyperfabrics.com:7051
       - CORE_PEER_LOCALMSPID=DigibankMSP
       - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp
       - CHAINCODE_LOGGING_LEVEL=info
@@ -70,18 +70,18 @@ services:
         - peer
   
   couchdb:
-    container_name: couchdb.hyperfabrics.com 
+    container_name: couchdb.digibank.hyperfabrics.com 
     image: hyperledger/fabric-couchdb:0.4.15
     restart: always
     environment:
-      - CORE_PEER_ADDRESS=peer.hyperfabrics.com:7051
+      - CORE_PEER_ADDRESS=peer.digibank.hyperfabrics.com:7051
       - CORE_PEER_ID=digibank-peer1
       - CORE_PEER_LOCALMSPID=DigibankMSP
       - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
       - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp
       - COUCHDB_USER=
       - COUCHDB_PASSWORD=
-      - COUCHDB_ADDRESS=couchdb.hyperfabrics.com:5984
+      - COUCHDB_ADDRESS=couchdb.digibank.hyperfabrics.com:5984
       - COUCHDB_MAXRETRIES=3
       - COUCHDB_MAXRETRIES_ON_STARTUP=10
       - COUCHDB_REQUEST_TIMEOUT=35s
@@ -96,13 +96,13 @@ services:
     depends_on:
         - peer
   cli:
-    container_name: cli.hyperfabrics.com
+    container_name: cli.digibank.hyperfabrics.com
     image: hyperledger/fabric-tools
     tty: true
     environment:
       - ORDERER_ADDRESS=3.19.31.198:7050
-      - CORE_PEER_ID=cli.hyperfabrics.com
-      - CORE_PEER_ADDRESS=peer.hyperfabrics.com:7051
+      - CORE_PEER_ID=cli.digibank.hyperfabrics.com
+      - CORE_PEER_ADDRESS=peer.digibank.hyperfabrics.com:7051
       - CORE_PEER_LOCALMSPID=DigibankMSP
       - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp
       - GOPATH=/opt/gopath

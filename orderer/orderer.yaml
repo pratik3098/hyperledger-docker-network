@@ -1,6 +1,6 @@
 orderer:
     image: hyperledger/fabric-orderer:1.4.1
-    container_name: orderer.hyperfabrics.com
+    container_name: orderer.papernet.hyperfabrics.com
     tty: true
     restart: always
     environment:
