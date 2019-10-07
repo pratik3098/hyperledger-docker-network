@@ -2,7 +2,8 @@
 # Part of a online course. Please check it out at http://www.acloudfan.com
 
 #source ./set-env.sh
-
+rm -f commercialpaperchannel_0.block
+rm -f commercialpaperchannel.block
 export COMMERCIALPAPER_CHANNEL_BLOCK_0=./commercialpaperchannel_0.block
 
 #1 Fetch the genesis for the channel - this leads to creation of

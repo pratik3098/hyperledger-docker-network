@@ -7,6 +7,7 @@ services:
     tty: true
     restart: always
     environment:
+      - GOPATH=/opt/gopath/
       - CORE_PEER_ID=digibank-peer1
       - CORE_PEER_LOCALMSPID=DigibankMSP
       - CORE_PEER_ADDRESS=peer.hyperfabrics.com:7051
@@ -16,6 +17,7 @@ services:
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer.hyperfabrics.com:7051
       - ORDERER_ADDRESS=3.19.31.198:7050
       - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp/
+      - CORE_PEER_FILESYSTEMPATH=/opt/gopath/src/github.com/hyperledger/fabric/ledger
       - COMMERCIALPAPER_CHANNEL_BLOCK_0=/opt/gopath/src/github.com/hyperledger/fabric/peer/commercialpaperchannel_0.block
       - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
       - CORE_PEER_NETWORKID=commercialpaper-network
@@ -28,6 +30,7 @@ services:
       - CORE_PEER_ADDRESSAUTODETECT=false    
       - CORE_CHAINCODE_LOGGING_SHIM=INFO
       - CORE_METRICS_ENABLED=false
+      - CORE_PEER_EVENTS_ADDRESS=0.0.0.0:7053
       - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=
       - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
