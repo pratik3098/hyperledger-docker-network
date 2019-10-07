@@ -6,7 +6,7 @@ orderer:
     environment:
       - ORDERER_GENERAL_LISTENADDRESS=0.0.0.0
       - ORDERER_GENERAL_LISTENPORT=7050
-      - ORDERER_GENERAL_LOCALMSPID=OrdererMSP
+      - ORDERER_GENERAL_LOCALMSPID=PapernetMSP
       - FABRIC_LOGGING_SPEC=INFO
       - ORDERER_GENERAL_GENESISMETHOD=file
       - ORDERER_GENERAL_GENESISFILE=/opt/gopath/src/github.com/hyperledger/fabric/orderer/commercialpaper-genesis.block
