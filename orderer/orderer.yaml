@@ -13,7 +13,7 @@ orderer:
       - ORDERER_GENERAL_PROFILE_ENABLED=true
       - ORDERER_GENERAL_GENESISMETHOD=file
       - ORDERER_GENERAL_GENESISFILE=/opt/gopath/src/github.com/hyperledger/fabric/orderer/commercialpaper-genesis.block
-      - ORDERER_GENERAL_LOCALMSPDIR=/var/hyperledger/msp/orderer/msp
+      - ORDERER_GENERAL_LOCALMSPDIR=/var/hyperledger/msp
       - ORDERER_GENERAL_TLS_ENABLED=false
       - ORDERER_GENERAL_TLS_PRIVATEKEY=/var/hyperledger/msp/tls/server.key
       - ORDERER_GENERAL_TLS_CERTIFICATE=/var/hyperledger/msp/tls/server.crt
@@ -22,7 +22,7 @@ orderer:
     command: orderer
     volumes:
       -  /var/run/:/host/var/run/
-      - ./msps:/var/hyperledger/msp
+      - ./msps/orderer/msp:/var/hyperledger/msp
       - ./artefacts:/opt/gopath/src/github.com/hyperledger/fabric/orderer/
     ports:
       - "7050:7050"
