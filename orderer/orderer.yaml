@@ -8,6 +8,9 @@ orderer:
       - ORDERER_GENERAL_LISTENPORT=7050
       - ORDERER_GENERAL_LOCALMSPID=PapernetMSP
       - FABRIC_LOGGING_SPEC=INFO
+      - ORDERER_FILELEDGER_LOCATION=/opt/gopath/src/github.com/hyperledger/ledger
+      - ORDERER_FILELEDGER_PREFIX=hyperfabrics-orderer
+      - ORDERER_GENERAL_PROFILE_ENABLED=true
       - ORDERER_GENERAL_GENESISMETHOD=file
       - ORDERER_GENERAL_GENESISFILE=/opt/gopath/src/github.com/hyperledger/fabric/orderer/commercialpaper-genesis.block
       - ORDERER_GENERAL_LOCALMSPDIR=/var/hyperledger/msp/orderer/msp

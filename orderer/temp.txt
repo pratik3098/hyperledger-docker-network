@@ -1,0 +1,15 @@
+ FileLedger.Location = "/var/hyperledger/production/orderer"
+
+- ORDERER_FILELEDGER_LOCATION=/opt/gopath/src/github.com/hyperledger/ledger
+- ORDERER_FILELEDGER_PREFIX=hyperfabrics-orderer
+
+
+Consensus = map[SnapDir:/var/hyperledger/production/orderer/etcdraft/snapshot WALDir:/var/hyperledger/production/orderer/etcdraft/wal]
+
+LevelDB error: github.com/hyperledger/fabric/common/ledger/util/leveldbhelper.(*DB).Open(0xc00052b7c0)
+
+
+ General.GenesisProfile = "SampleInsecureSolo"
+General.Profile.Enabled = false
+
+- ORDERER_GENERAL_PROFILE_ENABLED=true
