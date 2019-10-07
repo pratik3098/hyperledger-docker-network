@@ -19,7 +19,7 @@ fi
 # Change these if you would like to try out your own chaincode
 export CC_CONSTRUCTOR='{"Args":["instantiate"]}'
 export CC_NAME="commercialpaper"
-export CC_PATH="../contract"
+export CC_PATH="/opt/gopath/src/github.com/contract"
 export CC_VERSION="1.0"
 export CC_CHANNEL_ID="commercialpaperchannel"
 
