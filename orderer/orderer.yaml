@@ -4,7 +4,7 @@ orderer:
     tty: true
     restart: always
     environment:
-      - ORDERER_GENERAL_LISTENADDRESS=127.0.0.1
+      - ORDERER_GENERAL_LISTENADDRESS=0.0.0.0
       - ORDERER_GENERAL_LISTENPORT=7050
       - ORDERER_GENERAL_LOCALMSPID=OrdererMSP
       - FABRIC_LOGGING_SPEC=INFO
