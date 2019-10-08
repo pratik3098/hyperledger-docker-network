@@ -1,0 +1,13 @@
+version: '2'
+
+services:
+  peer:
+    container_name: peer.digibank.hyperfabrics.com
+    image: hyperledger/fabric-ccenv:1.4.1
+    tty: true
+    restart: always
+    environment:
+      - GOPATH=/opt/gopath/
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
+ 
+ 
