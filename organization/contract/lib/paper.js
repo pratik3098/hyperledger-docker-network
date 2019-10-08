@@ -95,7 +95,7 @@ class CommercialPaper extends State {
     }
 
     static getClass() {
-        return 'org.papernet.commercialpaper';
+        return 'commercialpaper.papernet.hyperfabrics';
     }
 }
 

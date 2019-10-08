@@ -12,7 +12,7 @@ const CommercialPaper = require('./paper.js');
 class PaperList extends StateList {
 
     constructor(ctx) {
-        super(ctx, 'org.papernet.commercialpaperlist');
+        super(ctx, 'commercialpaperlist.papernet.hyperfabrics');
         this.use(CommercialPaper);
     }
 

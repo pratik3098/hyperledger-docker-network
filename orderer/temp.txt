@@ -12,4 +12,6 @@ LevelDB error: github.com/hyperledger/fabric/common/ledger/util/leveldbhelper.(*
  General.GenesisProfile = "SampleInsecureSolo"
 General.Profile.Enabled = false
 
-- ORDERER_GENERAL_PROFILE_ENABLED=true
+- ORDERER_GENERAL_PROFILE_ENABLED=false
+
+-ORDERER_GENESIS_PROFILE="CommercialPaperOrdererGenesis"
