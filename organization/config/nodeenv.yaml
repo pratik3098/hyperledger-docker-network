@@ -2,7 +2,7 @@ version: '2'
 
 services:
   peer:
-    container_name: peer.digibank.hyperfabrics.com
+    container_name: chaincode-test
     image: hyperledger/fabric-ccenv:1.4.1
     tty: true
     restart: always
