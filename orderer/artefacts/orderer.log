@@ -1,5 +1,5 @@
-[34m2019-10-08 19:35:40.857 UTC [localconfig] completeInitialization -> INFO 001[0m Kafka.Version unset, setting to 0.10.2.0
-[34m2019-10-08 19:35:40.870 UTC [orderer.common.server] prettyPrintStruct -> INFO 002[0m Orderer config values:
+[34m2019-10-08 19:57:42.979 UTC [localconfig] completeInitialization -> INFO 001[0m Kafka.Version unset, setting to 0.10.2.0
+[34m2019-10-08 19:57:42.993 UTC [orderer.common.server] prettyPrintStruct -> INFO 002[0m Orderer config values:
 	General.LedgerType = "file"
 	General.ListenAddress = "0.0.0.0"
 	General.ListenPort = 7050
@@ -32,7 +32,7 @@
 	General.GenesisProfile = "CommercialPaperOrdererGenesis"
 	General.SystemChannel = "test-system-channel-name"
 	General.GenesisFile = "/opt/gopath/src/github.com/hyperledger/fabric/orderer/commercialpaper-genesis.block"
-	General.Profile.Enabled = true
+	General.Profile.Enabled = false
 	General.Profile.Address = "0.0.0.0:6060"
 	General.LocalMSPDir = "/var/hyperledger/msp"
 	General.LocalMSPID = "PapernetMSP"
@@ -90,17 +90,17 @@
 panic: Error opening leveldb: resource temporarily unavailable
 
 goroutine 1 [running]:
-github.com/hyperledger/fabric/common/ledger/util/leveldbhelper.(*DB).Open(0xc00002f800)
+github.com/hyperledger/fabric/common/ledger/util/leveldbhelper.(*DB).Open(0xc000223800)
 	/opt/gopath/src/github.com/hyperledger/fabric/common/ledger/util/leveldbhelper/leveldb_helper.go:79 +0x271
-github.com/hyperledger/fabric/common/ledger/util/leveldbhelper.NewProvider(0xc000030ff0, 0xc000030ff0)
+github.com/hyperledger/fabric/common/ledger/util/leveldbhelper.NewProvider(0xc00017e120, 0xc00017e120)
 	/opt/gopath/src/github.com/hyperledger/fabric/common/ledger/util/leveldbhelper/leveldb_provider.go:40 +0xda
-github.com/hyperledger/fabric/common/ledger/blkstorage/fsblkstorage.NewProvider(0xc0001fc220, 0xc0001fc260, 0x7d2325, 0xc00000e4d8)
+github.com/hyperledger/fabric/common/ledger/blkstorage/fsblkstorage.NewProvider(0xc0001f0c20, 0xc0001f0c40, 0x7d2325, 0xc00000e4f0)
 	/opt/gopath/src/github.com/hyperledger/fabric/common/ledger/blkstorage/fsblkstorage/fs_blockstore_provider.go:34 +0x7f
 github.com/hyperledger/fabric/common/ledger/blockledger/file.New(0xc00004010c, 0x2d, 0x2, 0x2)
 	/opt/gopath/src/github.com/hyperledger/fabric/common/ledger/blockledger/file/factory.go:71 +0xea
-github.com/hyperledger/fabric/orderer/common/server.createLedgerFactory(0xc000240480, 0x1b89730, 0x0, 0x7ce857, 0xc0001181e0)
+github.com/hyperledger/fabric/orderer/common/server.createLedgerFactory(0xc000242480, 0x1b89730, 0x0, 0x7ce857, 0xc0001201e0)
 	/opt/gopath/src/github.com/hyperledger/fabric/orderer/common/server/util.go:32 +0x1dd
-github.com/hyperledger/fabric/orderer/common/server.Start(0x1013e09, 0x5, 0xc000240480)
+github.com/hyperledger/fabric/orderer/common/server.Start(0x1013e09, 0x5, 0xc000242480)
 	/opt/gopath/src/github.com/hyperledger/fabric/orderer/common/server/main.go:104 +0x118
 github.com/hyperledger/fabric/orderer/common/server.Main()
 	/opt/gopath/src/github.com/hyperledger/fabric/orderer/common/server/main.go:91 +0x1ce

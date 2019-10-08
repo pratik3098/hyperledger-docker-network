@@ -12,7 +12,7 @@ orderer:
       - ORDERER_CONSENSUS=""
       - ORDERER_GENERAL_GENESISPROFILE=CommercialPaperOrdererGenesis
       - ORDERER_FILELEDGER_PREFIX=hyperfabrics-orderer
-      - ORDERER_GENERAL_PROFILE_ENABLED=true
+      - ORDERER_GENERAL_PROFILE_ENABLED=false
       - ORDERER_GENERAL_GENESISMETHOD=file
       - ORDERER_GENERAL_GENESISFILE=/opt/gopath/src/github.com/hyperledger/fabric/orderer/commercialpaper-genesis.block
       - ORDERER_GENERAL_LOCALMSPDIR=/var/hyperledger/msp
@@ -28,3 +28,4 @@ orderer:
       - ./artefacts:/opt/gopath/src/github.com/hyperledger/fabric/orderer/
     ports:
       - "7050:7050"
+      - "6060:6060"
