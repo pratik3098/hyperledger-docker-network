@@ -10,7 +10,8 @@ services:
       - GOPATH=/opt/gopath/
       - CORE_PEER_ID=digibank-peer1
       - CORE_PEER_LOCALMSPID=DigibankMSP
-      - CORE_PEER_ADDRESS=peer.digibank.hyperfabrics.com:7051
+      - CORE_PEER_ADDRESS=0.0.0.0:7051
+        # - CORE_PEER_ADDRESS=peer.digibank.hyperfabrics.com:7051
       - CORE_PEER_CHAINCODE_LISTENADDRESS=chaincode.digibank.hyperfabrics.com:7052
       - CORE_LEDGER_STATE_STATEDATABSE=CouchDB
       - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb.digibank.hyperfabrics.com:5984

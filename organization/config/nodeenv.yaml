@@ -1,7 +1,7 @@
 version: '2'
 
 services:
-cli:
+  cli:
     container_name: cli.digibank.hyperfabrics.com
     image: hyperledger/fabric-tools
     tty: true

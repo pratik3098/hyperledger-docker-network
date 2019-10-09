@@ -4,7 +4,7 @@ SPDX-License-Identifier: Apache-2.0
 'use strict';
 
 //const Chaincode = require('../lib/chaincode');
-const Chaincode = require('../lib/papercontract.js');
+const Chaincode = require('../lib/chaincode');
 const { Stub } = require('fabric-shim');
 
 require('chai').should();
