@@ -22,5 +22,3 @@ cli:
         - ../:/opt/gopath/src/github.com/
         - ../peer:/opt/gopath/src/github.com/hyperledger/fabric/peer
         - ../msps/digibank/admin/msp:/etc/hyperledger/msp
-    depends_on:
-        - peer
