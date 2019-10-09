@@ -1,13 +1,26 @@
 version: '2'
 
 services:
-  peer:
-    container_name: chaincode-test
-    image: hyperledger/fabric-ccenv:1.4.1
+cli:
+    container_name: cli.digibank.hyperfabrics.com
+    image: hyperledger/fabric-tools
     tty: true
-    restart: always
     environment:
-      - GOPATH=/opt/gopath/
+      - ORDERER_ADDRESS=3.19.31.198:7050
+      - CORE_PEER_ID=cli.digibank.hyperfabrics.com
+      - CORE_PEER_ADDRESS=peer.digibank.hyperfabrics.com:7051
+      - CORE_PEER_LOCALMSPID=DigibankMSP
+      - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp
+      - GOPATH=/opt/gopath
+      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+      - FABRIC_LOGGING_SPEC=info
+      - CORE_CHAINCODE_KEEPALIVE=10
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
- 
- 
+    command: /bin/bash
+    volumes:
+        - /var/run/:/host/var/run/
+        - ../:/opt/gopath/src/github.com/
+        - ../peer:/opt/gopath/src/github.com/hyperledger/fabric/peer
+        - ../msps/digibank/admin/msp:/etc/hyperledger/msp
+    depends_on:
+        - peer
